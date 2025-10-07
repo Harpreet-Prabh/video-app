@@ -1,11 +1,29 @@
+"use Client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+
 function Pagination() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const router = useRouter();
+
+  function handleNextButton() {
+    setCurrentPage(currentPage + 1);
+  }
+
+  const handlePreviousButton = () => {
+    currentPage === 1 ? false : setCurrentPage(currentPage - 1);
+  };
+
   return (
     <div className="flex justify-center mt-8">
       <nav
         className="flex items-center space-x-2 bg-white shadow-md rounded-xl px-4 py-2"
         aria-label="Pagination"
       >
-        <button className="px-3 py-1 rounded-lg text-gray-500 border border-gray-200 hover:bg-gray-50">
+        <button
+          className="px-3 py-1 rounded-lg text-gray-500 border border-gray-200 hover:bg-gray-50"
+          onClick={handlePreviousButton}
+        >
           ←
         </button>
         <button className="px-3 py-1 rounded-lg bg-blue-500 text-white hover:bg-blue-600">
@@ -21,7 +39,10 @@ function Pagination() {
         <button className="px-3 py-1 rounded-lg border border-gray-200 hover:bg-gray-50">
           10
         </button>
-        <button className="px-3 py-1 rounded-lg text-gray-500 border border-gray-200 hover:bg-gray-50">
+        <button
+          className="px-3 py-1 rounded-lg text-gray-500 border border-gray-200 hover:bg-gray-50"
+          onClick={handleNextButton}
+        >
           →
         </button>
       </nav>
