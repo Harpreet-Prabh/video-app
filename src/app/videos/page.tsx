@@ -5,18 +5,22 @@ import VideoList from "@/components/VideoList";
 async function Videos({
   searchParams,
 }: {
-  searchParams: Promise<{ query: string; sortBy: string }>;
+  searchParams: Promise<{ query: string; sortBy: string; page: number }>;
 }) {
   const variables = await searchParams;
   console.log(variables);
   let url = `https://api.freeapi.app/api/v1/public/youtube/videos`;
 
-  if (variables.query && variables.sortBy) {
-    url += `?query=${variables.query}&sortBy=${variables.sortBy}`;
+  if (variables.query && variables.sortBy && variables.page) {
+    url += `?query=${variables.query}&sortBy=${variables.sortBy}&page=${variables.page}`;
   } else if (variables.sortBy) {
     url += `?sortBy=${variables.sortBy}`;
   } else if (variables.query) {
     url += `?query=${variables.query}`;
+  }
+
+  if (variables.page) {
+    url += `?page=${variables.page}`;
   }
 
   const res = await fetch(url);

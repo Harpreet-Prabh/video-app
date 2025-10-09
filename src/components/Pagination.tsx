@@ -1,4 +1,4 @@
-"use Client";
+"use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -7,11 +7,15 @@ function Pagination() {
   const router = useRouter();
 
   function handleNextButton() {
-    setCurrentPage(currentPage + 1);
+    setCurrentPage((pageNumber) => pageNumber + 1);
+    router.push(`/videos?page=${currentPage + 1}`);
   }
 
   const handlePreviousButton = () => {
-    currentPage === 1 ? false : setCurrentPage(currentPage - 1);
+    if (currentPage !== 1) {
+      setCurrentPage((pageNumber) => pageNumber - 1);
+      router.push(`/videos?page=${currentPage - 1}`);
+    }
   };
 
   return (
