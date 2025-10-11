@@ -1,20 +1,30 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 function Pagination() {
-  const [currentPage, setCurrentPage] = useState(1);
+  let searchparams = useSearchParams();
+
+  const intialPage = parseInt(searchparams.get("page") || "1");
+
+  const [currentPage, setCurrentPage] = useState(intialPage);
   const router = useRouter();
+
+  function updatePage(pageNumber: number) {
+    const params = new URLSearchParams(searchparams.toString());
+    params.set("page", pageNumber.toString());
+    router.push(`/videos?${params.toString()}`);
+  }
 
   function handleNextButton() {
     setCurrentPage((pageNumber) => pageNumber + 1);
-    router.push(`/videos?page=${currentPage + 1}`);
+    updatePage(currentPage);
   }
 
   const handlePreviousButton = () => {
     if (currentPage !== 1) {
       setCurrentPage((pageNumber) => pageNumber - 1);
-      router.push(`/videos?page=${currentPage - 1}`);
+      updatePage(currentPage);
     }
   };
 

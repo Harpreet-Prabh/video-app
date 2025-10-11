@@ -17,11 +17,11 @@ async function Videos({
     url += `?sortBy=${variables.sortBy}`;
   } else if (variables.query) {
     url += `?query=${variables.query}`;
-  }
-
-  if (variables.page) {
+  } else if (variables.page) {
     url += `?page=${variables.page}`;
   }
+
+  console.log(url);
 
   const res = await fetch(url);
   const data = await res.json();
